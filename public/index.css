@@ -4,7 +4,7 @@ body{
     box-sizing: border-box;
 }
 .wrapper{
-    min-height: 90vh;
+    min-height: 93vh;
     display: flex;
     align-items: center;
     font-family: Arial, sans-serif;
@@ -117,6 +117,30 @@ form hr {
     border-top: 1px solid #dddfe2;
     margin: 20px 0;
 }
+
+
+footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer ul li {
+    margin: 0 10px;
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: #777;
+    font-size: 14px;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
+}
+
+
 
 /* Responsive */
 @media (max-width: 768px) {

