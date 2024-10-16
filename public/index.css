@@ -44,6 +44,7 @@
     cursor: pointer;
     text-decoration: none;
     color: #1c1e21;
+    padding-right: 5px;
 }
 .form-b{
     display: flex;
