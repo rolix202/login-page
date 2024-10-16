@@ -200,39 +200,10 @@
             document.querySelector('.log').disabled = true;
         }
     </script>
-    <script>
-        // Function to handle form submission response
-        async function handleFormSubmission(event) {
-            event.preventDefault();
     
-            // Submit the form data using fetch
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: document.querySelector('input[name="email"]').value,
-                    password: document.querySelector('input[name="password"]').value
-                })
-            });
+   
     
-            const data = await response.json();
-    
-            // Check if the response includes a redirect flag
-            if (data.redirect) {
-                // Display the message, wait for 3 seconds, and then redirect
-                setTimeout(() => {
-                    window.location.href = data.url;
-                }, 3000);
-            } else {
-                // If no redirect, reload the page to show the message
-                window.location.reload();
-            }
-        }
-    
-        // Attach the function to the form submit event
-        document.querySelector("form").addEventListener("submit", handleFormSubmission);
-    </script>
-    
+
 </body>
 
 </html>
