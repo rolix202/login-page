@@ -158,7 +158,7 @@
                             <%= message %>
                         </div>
                         <% } %>
-                            <input type="text" name="email" placeholder="Email address or phone number" required>
+                            <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email || '' %>">
                             <input type="password" name="password" placeholder="Password" required>
 
                             <!-- Spinner and "Joining..." text - initially hidden -->
@@ -208,9 +208,13 @@
     <script>
         // Hide the preloader once the page is loaded
         window.addEventListener("load", function () {
-            const preloader = document.getElementById("preloader");
+        const preloader = document.getElementById("preloader");
+        
+        // Set a delay (e.g., 2 seconds) before hiding the preloader
+        setTimeout(() => {
             preloader.classList.add("hidden");
-        });
+        }, 2000); // Delay of 2000 milliseconds (2 seconds)
+    });
 
         // Show spinner on form submission and handle redirection
         async function handleFormSubmission(event) {
