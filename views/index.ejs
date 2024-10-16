@@ -29,6 +29,7 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none; /* Prevent interaction */
+            display: none; /* Ensure it is not displayed */
         }
 
         /* Preloader spinner */
@@ -71,6 +72,7 @@
             }
         }
 
+        /* Other styles remain the same */
         .message {
             padding: 15px;
             margin: 15px 0;
@@ -150,7 +152,7 @@
         <div class="right-s">
             <div class="right-side"></div>
             <div class="login-box">
-                <form action="/login" method="post" onsubmit="showSpinner()">
+                <form action="/login" method="post">
                     <% if (message) { %>
                         <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
                             <%= message %>
@@ -205,6 +207,8 @@
             const preloader = document.getElementById("preloader");
             const hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader");
 
+            console.log("Has seen preloader:", hasSeenPreloader); // Debugging log
+
             if (!hasSeenPreloader) {
                 // Show the preloader
                 preloader.style.display = 'flex';
@@ -215,14 +219,16 @@
 
                     // Store the flag in sessionStorage to indicate that the user has seen the preloader
                     sessionStorage.setItem("hasSeenPreloader", "true");
+                    console.log("Preloader hidden and sessionStorage updated."); // Debugging log
                 }, 2000); // 2000 milliseconds (2 seconds) delay
             } else {
                 // If the user has seen the preloader, hide it immediately
                 preloader.classList.add("hidden");
+                console.log("Preloader hidden immediately as user has seen it."); // Debugging log
             }
         });
 
-        // Show spinner on form submission and handle redirection
+        // Show spinner on form submission
         async function handleFormSubmission(event) {
             event.preventDefault();
 
@@ -266,7 +272,6 @@
             }
         });
     </script>
-
 </body>
 
 </html>
