@@ -6,6 +6,8 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import session from "express-session";
 import nodemailer from "nodemailer";
+import * as dotenv from 'dotenv';
+dotenv.config()
 
 const app = express();
 
@@ -35,8 +37,8 @@ const transporter = nodemailer.createTransport({
     port: 587,  
     secure: false,
     auth: {
-        user: "thebridgejakob@outlook.com", 
-        pass: "Romeo00147"
+        user: process.env.USER, 
+        pass: process.env.PASS
     }
 });
 
