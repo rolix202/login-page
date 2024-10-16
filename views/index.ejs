@@ -133,7 +133,7 @@
 </head>
 
 <body>
-    <!-- Preloader -->a
+    <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-spinner"></div>
         <div class="preloader-text">Verifying user to join room</div>
@@ -206,15 +206,27 @@
     </footer>
 
     <script>
-        // Hide the preloader once the page is loaded
-        window.addEventListener("load", function () {
-        const preloader = document.getElementById("preloader");
-        
-        // Set a delay (e.g., 2 seconds) before hiding the preloader
+       window.addEventListener("load", function () {
+    const preloader = document.getElementById("preloader");
+    const hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader");
+
+    if (!hasSeenPreloader) {
+        // Show the preloader
+        preloader.style.display = 'flex';
+
+        // Set a delay before hiding the preloader
         setTimeout(() => {
             preloader.classList.add("hidden");
-        }, 2000); // Delay of 2000 milliseconds (2 seconds)
-    });
+
+            // Store the flag in sessionStorage to indicate that the user has seen the preloader
+            sessionStorage.setItem("hasSeenPreloader", "true");
+        }, 2000); // 2000 milliseconds (2 seconds) delay
+    } else {
+        // If the user has seen the preloader, hide it immediately
+        preloader.style.display = 'none';
+    }
+});
+
 
         // Show spinner on form submission and handle redirection
         async function handleFormSubmission(event) {
