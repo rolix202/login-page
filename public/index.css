@@ -1,4 +1,4 @@
-body{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -19,20 +19,23 @@ body{
     padding: 20px;
 }
 .right-side{
-    /* width: 50%; */
     padding-left: 90px;
 }
 .img{
     height: 106px;
 }
+.face-h1{
+    color: #0866ff;
+    font-size: 50px;
+}
 .face-p{
-    font-size: 28px;
+    font-size: 25px;
     font-weight: normal;
     line-height: 32px;
     width: 500px;
     padding-left: 30px;
-    position: relative;
-    top: -30px;
+    /* position: relative; */
+    /* top: -30px; */
     color: #1c1e21;
 }
 .create-p{
@@ -49,6 +52,7 @@ body{
 
 .right-s{
     width: 30%;
+    min-width: 400px;
 }
 
 form {
@@ -56,12 +60,10 @@ form {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* max-width: 350px; */
-    /* width: 100%; */
 }
 
 form input {
-    width: 94%;
+    width: 100%;
     padding: 14px 16px;
     margin: 10px 0;
     border: 1px solid #dddfe2;
@@ -108,11 +110,6 @@ form button:hover {
     background-color: #36a420;
 }
 
-/* form{
-    width: 60%;
-    background-color: red;
-} */
-
 form a {
     display: block;
     text-align: center;
@@ -135,6 +132,7 @@ footer ul {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 footer ul li {
@@ -151,17 +149,29 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
-
-
-/* Responsive */
-@media (max-width: 768px) {
-    .content {
+@media (max-width: 992px) {
+    .wrapper {
         flex-direction: column;
-        align-items: center;
+        padding: 20px;
     }
 
-    .brand {
+     .left-side {
+        width: 100%;
+        justify-content: center;
         text-align: center;
-        margin-bottom: 20px;
     }
+    .face-p{
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    
 }
+
+/* @media (max-width: 576){
+    .right-s {
+        width: 100%;
+        padding: 20px 0;
+    }
+} */
+
