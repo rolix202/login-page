@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    /* background-color: #f0f2f5; */
 }
 .left-side{
     width: 50%;
@@ -150,20 +150,114 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
+
+
+
+/* Fullscreen Carousel Background */
+.carousel-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.carousel-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the image covers the area but keeps aspect ratio */
+    object-position: center; /* Centers the image within the slide */
+}
+
+/* Overlay for darkening background */
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    z-index: 1;
+}
+
+/* Active slide */
+.carousel-slide.active {
+    opacity: 1;
+}
+
+/* Media Queries for Responsive Design */
+
+/* For small devices (like smartphones) */
+@media (max-width: 576px) {
+    .carousel-background {
+        height: 60vh; /* Reduce height for small screens */
+    }
+    
+    .carousel-slide img {
+        object-fit: cover; /* Ensure image still covers the space while maintaining aspect ratio */
+    }
+}
+
+/* For medium devices (tablets or small desktops) */
+@media (max-width: 768px) {
+    .carousel-background {
+        height: 70vh; /* Adjust height for medium-sized screens */
+    }
+
+    .carousel-slide img {
+        object-fit: cover;
+    }
+}
+
+
+
+
 @media (max-width: 992px) {
     .wrapper {
         flex-direction: column;
         padding: 20px;
+        position: relative;
+        top: 200px;
     }
 
      .left-side {
+        position: absolute;
+        top: 30px;
         width: 100%;
         justify-content: center;
         text-align: center;
+        
+    }
+    .right-s{
+        position: absolute;
+        top: 200px;
     }
     .face-p{
         font-size: 18px;
         margin-top: 10px;
+        color: #fff;
+    }
+
+    footer{
+        margin-top: 300px;
     }
 
     
