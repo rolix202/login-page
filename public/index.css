@@ -155,18 +155,23 @@ footer ul li a:hover {
 
 
 /* Fullscreen Carousel Background */
-.carousel-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+
+/* Carousel container for three sections */
+.carousel-container {
+    display: flex;
     height: 100vh;
     overflow: hidden;
-    z-index: -1;
+}
+
+/* Each section takes up 1/3 of the width */
+.carousel-section {
+    position: relative;
+    width: 33.33%;
+    height: 100%;
 }
 
 .carousel-images {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
 }
@@ -184,25 +189,101 @@ footer ul li a:hover {
 .carousel-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ensures the image covers the area but keeps aspect ratio */
-    object-position: center; /* Centers the image within the slide */
+    object-fit: cover;
 }
 
-/* Overlay for darkening background */
 .carousel-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
-/* Active slide */
 .carousel-slide.active {
     opacity: 1;
 }
+
+.carousel-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1; 
+}
+
+
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+}
+
+
+.wrapper {
+    position: relative;
+    z-index: 2; 
+    min-height: 93vh;
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+
+footer {
+    position: relative;
+    z-index: 2; 
+}
+
+/* Ensure content is properly aligned in mobile views */
+@media (max-width: 992px) {
+    .wrapper {
+        flex-direction: column;
+        padding: 20px;
+        position: relative;
+        top: 200px;
+    }
+
+    .left-side {
+        position: absolute;
+        top: 30px;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    .right-s {
+        position: absolute;
+        top: 200px;
+    }
+
+    .face-p {
+        font-size: 18px;
+        margin-top: 10px;
+        color: #fff;
+    }
+
+    footer {
+        margin-top: 300px;
+    }
+}
+
+
+
+
+/* Overlay for darkening background */
+
+
+/* Active slide */
+
 
 /* Media Queries for Responsive Design */
 

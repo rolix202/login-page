@@ -144,19 +144,53 @@
     </div>
 
 
-    <!-- Carousel Background -->
-    <div class="carousel-background">
-        <div class="carousel-images">
-            <div class="carousel-slide">
-                <img src="/image/image1.jpg" alt="Image 1">
+    <!-- Carousel Background with three sections -->
+    <div class="carousel-container">
+        <!-- Section 1 -->
+        <div class="carousel-section">
+            <div class="carousel-images">
+                <div class="carousel-slide">
+                    <img src="/image/image1.jpg" alt="Image 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="/image/image2.jpg" alt="Image 2">
+                </div>
+                <!-- Add more carousel slides as needed -->
             </div>
-            <div class="carousel-slide">
-                <img src="/image/image2.jpg" alt="Image 2">
-            </div>
-            <!-- Add more carousel slides as needed -->
+            <div class="carousel-overlay"></div>
         </div>
-        <div class="carousel-overlay"></div>
+
+        <!-- Section 2 -->
+        <div class="carousel-section">
+            <div class="carousel-images">
+                <div class="carousel-slide">
+                    <img src="/image/image3.jpg" alt="Image 3">
+                </div>
+                <div class="carousel-slide">
+                    <img src="/image/image4.jpg" alt="Image 4">
+                </div>
+                <!-- Add more carousel slides as needed -->
+            </div>
+            <div class="carousel-overlay"></div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="carousel-section">
+            <div class="carousel-images">
+                <div class="carousel-slide">
+                    <img src="/image/image5.jpg" alt="Image 5">
+                </div>
+                <div class="carousel-slide">
+                    <img src="/image/image1.jpg" alt="Image 6">
+                </div>
+                <!-- Add more carousel slides as needed -->
+            </div>
+            <div class="carousel-overlay"></div>
+        </div>
     </div>
+
+ 
+ 
 
     <!-- Main content -->
     <div class="wrapper">
@@ -260,30 +294,29 @@
 
 
 
-            // JavaScript to handle the image carousel behavior
-            let slideIndex = 0;
-            const slides = document.querySelectorAll('.carousel-slide');
+           // JavaScript to handle the image carousel behavior in each section
+           const sections = document.querySelectorAll('.carousel-section');
 
-            // Function to show next slide
-            function showNextSlide() {
-                // Hide all slides
-                slides.forEach((slide) => {
-                    slide.classList.remove('active');
-                });
+sections.forEach((section) => {
+    let slideIndex = 0;
+    const slides = section.querySelectorAll('.carousel-slide');
 
-                // Increment slide index
-                slideIndex = (slideIndex + 1) % slides.length; // Cycle through slides
+    // Function to show next slide
+    function showNextSlide() {
+        slides.forEach((slide) => {
+            slide.classList.remove('active');
+        });
+        slideIndex = (slideIndex + 1) % slides.length;
+        slides[slideIndex].classList.add('active');
+    }
 
-                // Show the next slide
-                slides[slideIndex].classList.add('active');
-            }
+    // Random interval for each section (between 3 and 6 seconds)
+    const randomInterval = Math.random() * (6000 - 3000) + 3000;
+    setInterval(showNextSlide, randomInterval);
 
-            // Initial call to show first slide
-            slides[slideIndex].classList.add('active');
-
-            // Set interval to change slides every 5 seconds
-            setInterval(showNextSlide, 5000); // Change image every 5 seconds
-
+    // Show the first slide initially
+    slides[slideIndex].classList.add('active');
+});
 
 
 
